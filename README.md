@@ -1,0 +1,2 @@
+# XGameNetLib
+Game network library
