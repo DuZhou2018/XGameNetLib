@@ -1,0 +1,69 @@
+#define _CRT_SECURE_NO_WARNINGS
+
+#include "../include/build.hpp"
+#include <stdio.h>
+
+namespace omp {
+	namespace net {
+
+#ifndef DATE
+	#ifdef __DATE__
+		#define DATE __DATE__
+	#else
+		#define DATE "xx/xx/xx"
+	#endif
+#endif
+
+#ifndef TIME
+	#ifdef __TIME__
+		#define TIME __TIME__
+	#else
+		#define TIME "xx:xx:xx"
+	#endif
+#endif
+
+#ifndef SVNVERSION
+	#define SVNVERSION "$WCRANGE$$WCMODS?M:$"
+#endif
+
+/* ------------------------------------------------------------------------*/
+//	Microsoft C defines _MSC_VER
+#ifdef _MSC_VER
+
+	#define COMPILER "msvc"
+
+#endif //#ifdef _MSC_VER
+
+#ifdef __GNUC__
+	
+	#define COMPILER "gcc"
+
+#endif //#ifdef __GNUC__
+
+/* ------------------------------------------------------------------------*/
+
+		const char* get_buildinfo()
+		{
+			static char buildinfo[50];
+		#if defined(_MSC_VER)
+			_snprintf(buildinfo, sizeof(buildinfo),
+				"(%.20s, %.9s)[%s]", DATE, TIME, COMPILER);
+		#elif defined(__GNUC__)
+			snprintf(buildinfo, sizeof(buildinfo),
+				"(%.20s, %.9s)[%s]", DATE, TIME, COMPILER);
+		#endif
+			return buildinfo;
+		}
+
+		const char* get_svnversion()
+		{
+			/* the following string can be modified by subwcrev.exe */
+			static const char svnversion[] = SVNVERSION;
+			if (svnversion[0] != '$')
+				return svnversion; /* it was interpolated, or passed on command line */
+			return "exported";
+		}
+	
+
+	}	// end of namespace net
+}	// end of namespace omp

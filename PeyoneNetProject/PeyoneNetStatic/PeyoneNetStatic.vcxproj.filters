@@ -1,0 +1,352 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Include">
+      <UniqueIdentifier>{8fa80f9f-6771-414f-8a51-605fc6ff78bd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="XXPub">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="SmallLib">
+      <UniqueIdentifier>{ff50c919-2cc2-4ca3-9943-716062fd8af5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SmallLib\sha1">
+      <UniqueIdentifier>{d3ea5bc7-663b-4d53-89d1-edbf7b2321f6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SmallLib\Json">
+      <UniqueIdentifier>{0f438bd3-6cae-4efc-ba1a-f063bee87131}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SmallLib\base64">
+      <UniqueIdentifier>{633cf942-3168-4d5e-96a2-0867a7a52d1e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Http">
+      <UniqueIdentifier>{58e7e8f9-663d-430c-bafc-a8820587f33e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SmallLib\Log">
+      <UniqueIdentifier>{f9f188a2-fa7c-4d60-9cca-8bf1acde9cef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="XXNetClient">
+      <UniqueIdentifier>{a5388baa-8a6e-4ede-aa65-728655a2b971}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="XXNetServer">
+      <UniqueIdentifier>{aab8b9a9-043b-4a98-8d59-d571ce6590ad}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="XXNetBase">
+      <UniqueIdentifier>{c1c522de-4c66-464c-8de4-1b1582cb20cd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="XNet">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\source\CAllocMg.cpp">
+      <Filter>XXPub</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\CGlobal.cpp">
+      <Filter>XXPub</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\ClientServerIDMG.cpp">
+      <Filter>XXPub</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\CountersMg.cpp">
+      <Filter>XXPub</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\InPublicPreDefine.cpp">
+      <Filter>XXPub</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\NetCountersInstanceMg.cpp">
+      <Filter>XXPub</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\NiceIDMg.cpp">
+      <Filter>XXPub</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\NiceNet.cpp">
+      <Filter>XXPub</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\NiceNetCounter.cpp">
+      <Filter>XXPub</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\Scheduler.cpp">
+      <Filter>XXPub</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\Scheduler_impl.cpp">
+      <Filter>XXPub</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\ImpNetLog.cpp">
+      <Filter>SmallLib\Log</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\NetLogMg.cpp">
+      <Filter>SmallLib\Log</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\NiceLog.cpp">
+      <Filter>SmallLib\Log</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\NiceHttpReq.cpp">
+      <Filter>XXPub</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\httpcc\UrlEncode.cpp">
+      <Filter>Http</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\httpcc\HFormData.cpp">
+      <Filter>Http</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\httpcc\HAnGetParam.cpp">
+      <Filter>Http</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\json\json_reader.cpp">
+      <Filter>SmallLib\Json</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\json\json_value.cpp">
+      <Filter>SmallLib\Json</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\json\json_writer.cpp">
+      <Filter>SmallLib\Json</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\NormalThreadMg.cpp">
+      <Filter>XXPub</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\INiceNetServer.cpp">
+      <Filter>XXNetServer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\WebSocketSession.cpp">
+      <Filter>XXNetServer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\base64\base64.cpp">
+      <Filter>SmallLib\base64</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\sha1\sha1.cpp">
+      <Filter>SmallLib\sha1</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\HttpServerSession.cpp">
+      <Filter>XXNetServer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\TCPServerSession.cpp">
+      <Filter>XXNetServer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\NiceIpLimit.cpp">
+      <Filter>XXPub</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\UDPServerSession.cpp">
+      <Filter>XXNetServer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\XXNetServer.cpp">
+      <Filter>XXNetServer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\TCPClientSession.cpp">
+      <Filter>XXNetClient</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\UDPClientSession.cpp">
+      <Filter>XXNetClient</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\WSClientSession.cpp">
+      <Filter>XXNetClient</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\XXClientMg.cpp">
+      <Filter>XXNetClient</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\WSSocketBase.cpp">
+      <Filter>XXNetBase</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\header\CAllocMg.h">
+      <Filter>XNet</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\header\CGlobal.hpp">
+      <Filter>XNet</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\header\ClientServerIDMG.h">
+      <Filter>XNet</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\header\CountersMg.hpp">
+      <Filter>XNet</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\header\DefineCounter.h">
+      <Filter>XNet</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\header\InPublicPreDefine.hpp">
+      <Filter>XNet</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\header\NetCountersInstanceMg.h">
+      <Filter>XNet</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\header\NetLogMg.h">
+      <Filter>XNet</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\header\NiceIDMg.h">
+      <Filter>XNet</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\header\NiceNet.h">
+      <Filter>XNet</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\header\NiceNetCounter.h">
+      <Filter>XNet</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\header\NiceNetLogicProtocol.h">
+      <Filter>XNet</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\header\QueueSafe.h">
+      <Filter>XNet</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\header\RSBuffer.hpp">
+      <Filter>XNet</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\header\Scheduler.hpp">
+      <Filter>XNet</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\header\Scheduler_impl.hpp">
+      <Filter>XNet</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\header\SimpleObjJar.h">
+      <Filter>XNet</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\header\Singleton.hpp">
+      <Filter>XNet</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\header\TCPPakDef.hpp">
+      <Filter>XNet</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\INiceLog.h">
+      <Filter>Include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\INiceNet.h">
+      <Filter>Include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\INiceNetCounter.h">
+      <Filter>Include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\NiceNetDefine.h">
+      <Filter>Include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\Xbuildconfig_NiceNet.hpp">
+      <Filter>Include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\header\ImpNetLog.h">
+      <Filter>SmallLib\Log</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\header\NiceLog.h">
+      <Filter>SmallLib\Log</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\IHttpReq.h">
+      <Filter>Include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\header\NiceHttpReq.h">
+      <Filter>XNet</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\httpcc\UrlEncode.hpp">
+      <Filter>Http</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\httpcc\HFormData.hpp">
+      <Filter>Http</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\httpcc\HAnGetParam.hpp">
+      <Filter>Http</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\json\allocator.h">
+      <Filter>SmallLib\Json</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\json\assertions.h">
+      <Filter>SmallLib\Json</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\json\autolink.h">
+      <Filter>SmallLib\Json</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\json\config.h">
+      <Filter>SmallLib\Json</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\json\features.h">
+      <Filter>SmallLib\Json</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\json\forwards.h">
+      <Filter>SmallLib\Json</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\json\json.h">
+      <Filter>SmallLib\Json</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\json\json_tool.h">
+      <Filter>SmallLib\Json</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\json\reader.h">
+      <Filter>SmallLib\Json</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\json\value.h">
+      <Filter>SmallLib\Json</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\json\version.h">
+      <Filter>SmallLib\Json</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\json\writer.h">
+      <Filter>SmallLib\Json</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\header\NormalThreadMg.h">
+      <Filter>XNet</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\NiceNetMsgHead.h">
+      <Filter>Include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\header\INiceNetServer.h">
+      <Filter>XXNetServer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\header\WebSocketSession.hpp">
+      <Filter>XXNetServer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\header\HttpServerSession.hpp">
+      <Filter>XXNetServer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\header\TCPServerSession.hpp">
+      <Filter>XXNetServer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sha1\sha1.h">
+      <Filter>SmallLib\sha1</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\header\NiceIpLimit.h">
+      <Filter>XNet</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\header\ANetVersion.hpp" />
+    <ClInclude Include="..\..\header\UDPServerSession.hpp">
+      <Filter>XXNetServer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\header\XXNetServer.hpp">
+      <Filter>XXNetServer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\header\TCPXSessionBase.hpp">
+      <Filter>XXNetServer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\header\UdpServerBase.h">
+      <Filter>XXNetServer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\header\TcpServerBase.h">
+      <Filter>XXNetServer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\NiceNetBase64.h">
+      <Filter>SmallLib\base64</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\header\TCPClientSession.hpp">
+      <Filter>XXNetClient</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\header\UDPClientSession.hpp">
+      <Filter>XXNetClient</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\header\WSClientSession.hpp">
+      <Filter>XXNetClient</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\header\XXClientMg.hpp">
+      <Filter>XXNetClient</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\header\XClientMgBase.h">
+      <Filter>XXNetClient</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\header\WSSocketBase.hpp">
+      <Filter>XXNetBase</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\..\source\modify.txt" />
+    <Text Include="ReadMe.txt" />
+    <Text Include="..\..\httpcc\httpd_demo.txt">
+      <Filter>Http</Filter>
+    </Text>
+  </ItemGroup>
+</Project>

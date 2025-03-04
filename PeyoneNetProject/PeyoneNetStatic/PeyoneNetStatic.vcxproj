@@ -1,0 +1,207 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{89657C8F-7D2D-4773-AD0E-2B2817CB9D5D}</ProjectGuid>
+    <RootNamespace>PeyoneNetStatic</RootNamespace>
+    <Keyword>Win32Proj</Keyword>
+    <ProjectName>PeyoneNet</ProjectName>
+    <WindowsTargetPlatformVersion>10.0.20348.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <PlatformToolset>v141</PlatformToolset>
+    <CharacterSet>NotSet</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <PlatformToolset>v141</PlatformToolset>
+    <CharacterSet>NotSet</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>11.0.51106.1</_ProjectFileVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <OutDir>../../../OutDirObj/NineNet/PNetStatic/debugMtdX64/</OutDir>
+    <IntDir>../../../OutDirObj/NineNet/PNetStatic/debugMtdX64/</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <OutDir>../../../OutDirObj/NineNet/PNetStatic/ReleaseMtdX64/</OutDir>
+    <IntDir>../../../OutDirObj/NineNet/PNetStatic/ReleaseMtdX64/</IntDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>../../../XDepend/stl_boost_wstl;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ExceptionHandling>Async</ExceptionHandling>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <StructMemberAlignment>Default</StructMemberAlignment>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <ProgramDataBaseFileName>../../../XDepend/lib-win-centos/win_lib/PeonyNet_static_mtd_wstl.pdb</ProgramDataBaseFileName>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <DisableSpecificWarnings>4819;4748;4996;4244;4503;</DisableSpecificWarnings>
+    </ClCompile>
+    <Lib>
+      <OutputFile>../../../XDepend/lib-win-centos/win_lib/PeonyNet_static_mtd_wstl.lib</OutputFile>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <AdditionalOptions>/EHa %(AdditionalOptions)</AdditionalOptions>
+      <Optimization>MaxSpeed</Optimization>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <AdditionalIncludeDirectories>../../../XDepend/stl_boost_wstl;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ExceptionHandling>Async</ExceptionHandling>
+      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <ProgramDataBaseFileName>../../../XDepend/lib-win-centos/win_lib/PeonyNet_static_mt_wstl.pdb</ProgramDataBaseFileName>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <DisableSpecificWarnings>4819;4748;4996;4244;4503;</DisableSpecificWarnings>
+    </ClCompile>
+    <Lib>
+      <OutputFile>../../../XDepend/lib-win-centos/win_lib/PeonyNet_static_mt_wstl.lib</OutputFile>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\base64\base64.cpp" />
+    <ClCompile Include="..\..\httpcc\HAnGetParam.cpp" />
+    <ClCompile Include="..\..\httpcc\HFormData.cpp" />
+    <ClCompile Include="..\..\httpcc\UrlEncode.cpp" />
+    <ClCompile Include="..\..\json\json_reader.cpp" />
+    <ClCompile Include="..\..\json\json_value.cpp" />
+    <ClCompile Include="..\..\json\json_writer.cpp" />
+    <ClCompile Include="..\..\sha1\sha1.cpp" />
+    <ClCompile Include="..\..\source\CAllocMg.cpp" />
+    <ClCompile Include="..\..\source\CGlobal.cpp" />
+    <ClCompile Include="..\..\source\ClientServerIDMG.cpp" />
+    <ClCompile Include="..\..\source\CountersMg.cpp" />
+    <ClCompile Include="..\..\source\HttpServerSession.cpp" />
+    <ClCompile Include="..\..\source\INiceNetServer.cpp" />
+    <ClCompile Include="..\..\source\InPublicPreDefine.cpp" />
+    <ClCompile Include="..\..\source\NetCountersInstanceMg.cpp" />
+    <ClCompile Include="..\..\source\NiceHttpReq.cpp" />
+    <ClCompile Include="..\..\source\NiceIDMg.cpp" />
+    <ClCompile Include="..\..\source\NiceIpLimit.cpp" />
+    <ClCompile Include="..\..\source\NiceNet.cpp" />
+    <ClCompile Include="..\..\source\NiceNetCounter.cpp" />
+    <ClCompile Include="..\..\source\NormalThreadMg.cpp" />
+    <ClCompile Include="..\..\source\Scheduler.cpp" />
+    <ClCompile Include="..\..\source\Scheduler_impl.cpp" />
+    <ClCompile Include="..\..\source\TCPClientSession.cpp" />
+    <ClCompile Include="..\..\source\TCPServerSession.cpp" />
+    <ClCompile Include="..\..\source\ImpNetLog.cpp" />
+    <ClCompile Include="..\..\source\NetLogMg.cpp" />
+    <ClCompile Include="..\..\source\NiceLog.cpp" />
+    <ClCompile Include="..\..\source\UDPClientSession.cpp" />
+    <ClCompile Include="..\..\source\UDPServerSession.cpp" />
+    <ClCompile Include="..\..\source\WebSocketSession.cpp" />
+    <ClCompile Include="..\..\source\WSClientSession.cpp" />
+    <ClCompile Include="..\..\source\WSSocketBase.cpp" />
+    <ClCompile Include="..\..\source\XXClientMg.cpp" />
+    <ClCompile Include="..\..\source\XXNetServer.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\header\ANetVersion.hpp" />
+    <ClInclude Include="..\..\header\CAllocMg.h" />
+    <ClInclude Include="..\..\header\CGlobal.hpp" />
+    <ClInclude Include="..\..\header\ClientServerIDMG.h" />
+    <ClInclude Include="..\..\header\CountersMg.hpp" />
+    <ClInclude Include="..\..\header\DefineCounter.h" />
+    <ClInclude Include="..\..\header\HttpServerSession.hpp" />
+    <ClInclude Include="..\..\header\INiceNetServer.h" />
+    <ClInclude Include="..\..\header\InPublicPreDefine.hpp" />
+    <ClInclude Include="..\..\header\NetCountersInstanceMg.h" />
+    <ClInclude Include="..\..\header\NetLogMg.h" />
+    <ClInclude Include="..\..\header\NiceHttpReq.h" />
+    <ClInclude Include="..\..\header\NiceIDMg.h" />
+    <ClInclude Include="..\..\header\NiceIpLimit.h" />
+    <ClInclude Include="..\..\header\NiceNet.h" />
+    <ClInclude Include="..\..\header\NiceNetCounter.h" />
+    <ClInclude Include="..\..\header\NiceNetLogicProtocol.h" />
+    <ClInclude Include="..\..\header\NormalThreadMg.h" />
+    <ClInclude Include="..\..\header\QueueSafe.h" />
+    <ClInclude Include="..\..\header\RSBuffer.hpp" />
+    <ClInclude Include="..\..\header\Scheduler.hpp" />
+    <ClInclude Include="..\..\header\Scheduler_impl.hpp" />
+    <ClInclude Include="..\..\header\SimpleObjJar.h" />
+    <ClInclude Include="..\..\header\Singleton.hpp" />
+    <ClInclude Include="..\..\header\TCPClientSession.hpp" />
+    <ClInclude Include="..\..\header\TCPPakDef.hpp" />
+    <ClInclude Include="..\..\header\TcpServerBase.h" />
+    <ClInclude Include="..\..\header\TCPServerSession.hpp" />
+    <ClInclude Include="..\..\header\TCPXSessionBase.hpp" />
+    <ClInclude Include="..\..\header\UDPClientSession.hpp" />
+    <ClInclude Include="..\..\header\UdpServerBase.h" />
+    <ClInclude Include="..\..\header\UDPServerSession.hpp" />
+    <ClInclude Include="..\..\header\WebSocketSession.hpp" />
+    <ClInclude Include="..\..\header\WSClientSession.hpp" />
+    <ClInclude Include="..\..\header\WSSocketBase.hpp" />
+    <ClInclude Include="..\..\header\XClientMgBase.h" />
+    <ClInclude Include="..\..\header\XXClientMg.hpp" />
+    <ClInclude Include="..\..\header\XXNetServer.hpp" />
+    <ClInclude Include="..\..\httpcc\HAnGetParam.hpp" />
+    <ClInclude Include="..\..\httpcc\HFormData.hpp" />
+    <ClInclude Include="..\..\httpcc\UrlEncode.hpp" />
+    <ClInclude Include="..\..\include\IHttpReq.h" />
+    <ClInclude Include="..\..\include\INiceLog.h" />
+    <ClInclude Include="..\..\include\INiceNet.h" />
+    <ClInclude Include="..\..\include\INiceNetCounter.h" />
+    <ClInclude Include="..\..\include\NiceNetBase64.h" />
+    <ClInclude Include="..\..\include\NiceNetDefine.h" />
+    <ClInclude Include="..\..\include\NiceNetMsgHead.h" />
+    <ClInclude Include="..\..\include\Xbuildconfig_NiceNet.hpp" />
+    <ClInclude Include="..\..\header\ImpNetLog.h" />
+    <ClInclude Include="..\..\header\NiceLog.h" />
+    <ClInclude Include="..\..\json\allocator.h" />
+    <ClInclude Include="..\..\json\assertions.h" />
+    <ClInclude Include="..\..\json\autolink.h" />
+    <ClInclude Include="..\..\json\config.h" />
+    <ClInclude Include="..\..\json\features.h" />
+    <ClInclude Include="..\..\json\forwards.h" />
+    <ClInclude Include="..\..\json\json.h" />
+    <ClInclude Include="..\..\json\json_tool.h" />
+    <ClInclude Include="..\..\json\reader.h" />
+    <ClInclude Include="..\..\json\value.h" />
+    <ClInclude Include="..\..\json\version.h" />
+    <ClInclude Include="..\..\json\writer.h" />
+    <ClInclude Include="..\..\sha1\sha1.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\..\httpcc\httpd_demo.txt" />
+    <Text Include="..\..\source\modify.txt" />
+    <Text Include="ReadMe.txt" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

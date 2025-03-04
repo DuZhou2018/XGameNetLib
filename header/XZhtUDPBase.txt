@@ -1,0 +1,370 @@
+/***************************************************************************************************************************************
+	author:	    DuZhou   qq: 1265008170,   mail: zht213@163.com
+	created:    2021/9/28 11:41
+	filename:   XZhtUDPBase.hpp
+	purpose:	
+***************************************************************************************************************************************/
+#ifndef XZhtUDPBase_h__
+#define XZhtUDPBase_h__
+#include "./OmpConfig.hpp"
+#include "./Scheduler_impl.hpp"
+#include "./QueueSafe.h"
+#include "./CGlobal.hpp"
+#include "./InPublicPreDefine.hpp"
+#include "./INiceNetServer.h"
+#include "./ClientServerIDMG.h"
+
+#include "../header/NiceLog.h"
+#include "../header/NiceIpLimit.h"
+#include "../include/INiceNetCounter.h"
+
+namespace peony 
+{
+    namespace net 
+	{
+ 		class   UDPServerSession;
+        class   UDPClientSession;
+        typedef boost::shared_ptr<UDPServerSession>UDPServerSessionPtr;
+        typedef boost::shared_ptr<UDPClientSession>UDPClientSessionPtr;
+
+
+		template < typename T >
+        class XZhtUdpBase : public INiceNetSocket
+        {
+        public:
+			XZhtUdpBase( AsioService &io_service,TXZTBaseInitPm &initPM);
+            virtual ~XZhtUdpBase();
+
+		public: //INiceNetSocket 接口部分
+			virtual void		start(){}
+			//这个函数只是关闭网络连接，可能会出发读，写错误发生，而回调inclose去完成关闭，删除
+			virtual void		close_out(string strwhy);
+			virtual unsigned	get_conn_index(){ return m_conn_index; }
+			virtual udp::socket*GetUdpSocket(){ return &m_socket; }
+			virtual string      XBase_GetRemoteIp(){ return GetRemoteIp(); }
+            udp::socket&        get_socket(){ return m_socket; }
+
+		public:
+			void            Init_Aaa( unsigned uConIndex,TStatData *pStatData );
+			bool			IsGoodConnect() {   return m_IsConnectOk;   } //网络是否可以使用
+			unsigned		get_lastlive_time(){ return m_LastLiveTm;   }
+
+			string			GetRemoteIp(unsigned &uPort);
+			string			GetRemoteIp();
+			string			GetLocalIp(unsigned &uPort);
+			string			GetLocalIp();
+
+			void			GetSessionBufferInfo(TSessionBufferInfo &info);
+			void			ClearSeeionBufferInfo();
+			bool		    IsAllocSendRecBuffer(){ return (m_recv_buf.isok_alloc_buffer()&&m_send_buf.isok_alloc_buffer()); }
+
+		protected:
+			//这个函数完成回调操作，感觉这个函数不应该调用close_out
+			void			inclose( string strwhy="DefaultCurBy" );
+            virtual void    XBase_UdpReadCb( const ZBoostErrCode& error, std::size_t bytes_transferred);
+            virtual void	XBase_UdpWriteCb(const ZBoostErrCode& error, std::size_t bytes_transferred);
+
+		protected:
+			/*****************************************************************************************************************************
+				Created:   2017/9/12
+				Author:    ZhangHongtao,   1265008170@qq.com 
+				    
+				提供一个通用的读写网络数据的接口;
+				iDataType 可以理解读写操作发起的位置，回调读写事件的时候会回调上去
+			******************************************************************************************************************************/
+			int             XBase_ReadData();
+			int             XBase_WriteData( const char *pBuffer,unsigned uMaxLen,unsigned uMinLen, int iDataType );
+
+
+		protected:
+			char                        m_RomeIp[20];            //对方的IP地址
+			TStatData                  *m_pStatData;
+            udp::socket                 m_socket;
+            udp::endpoint	            m_endpoint;
+            udp::endpoint               m_send_endpoint;
+            char                        m_whyClose[64];          //记录为什么关闭这个链接，如果是服务器主动关闭的前缀是Me,对方关闭的是ohter 
+
+			bool                        m_IsConnectOk;			//是否连接成功
+			unsigned                    m_LastLiveTm;           //最后收到消息，或者成功发送消息的时间;
+
+			// buffers
+			boost::recursive_mutex		m_sendbuf_mutex;		 //	for m_send_buf's res. protection
+			boost::recursive_mutex		m_recvbuf_mutex;		 //	for m_recv_buf's res. protection
+			RecvBufferType				m_recv_buf;
+			SendBufferType				m_send_buf;
+
+			char                        m_testSend[1024];
+		};
+
+		template < typename T >
+		peony::net::XZhtUdpBase<T>::XZhtUdpBase(AsioService &io_service,TXZTBaseInitPm &initPM )
+				:m_pStatData( initPM.pStatData ),
+ 				 m_socket( io_service ),
+				 m_recv_buf(initPM.r_alloc,initPM.r_size),
+				 m_send_buf(initPM.s_alloc,initPM.s_size)
+		{
+			m_InFunConnect = initPM.mFunConnect;
+			m_uXServerID   = initPM.mXServerID;
+			this->ClearAllXMark();
+			m_u_appdata = 0;
+			//发送失败关闭连接
+			this->SetXMark( socketmk_isclose_sendfail );
+			//m_xstmark |= socketmk_log;
+			memset(m_TcpTypeName, 0, sizeof(m_TcpTypeName));
+			memset(m_whyClose,0,sizeof(m_whyClose) );
+			memset(m_selflog,0,sizeof(m_selflog) );
+			strcpy(m_selflog," HttpSession<T>::HttpSession; " );
+			m_IsConnectOk = false;
+			m_LastLiveTm  = 0;
+			m_pMyXServer  = XServerSPtr();
+
+			CInPubFun::strcpy(m_RomeIp,sizeof(m_RomeIp),"RomeIpIsZero!",903231);
+		}
+
+		template < typename T >
+		peony::net::XZhtUdpBase<T >::~XZhtUdpBase()
+		{
+			string strRoIp = this->GetRemoteIp();
+			CIpLimitMg::Instance().DelOneIp(strRoIp);
+		}
+
+		template < typename T >
+		void peony::net::XZhtUdpBase<T >::Init_Aaa(unsigned uConIndex,TStatData *pStatData)
+		{
+			m_conn_index = uConIndex;
+			m_pStatData = pStatData;
+		}
+
+		template < typename T >
+		string peony::net::XZhtUdpBase<T >::GetRemoteIp(unsigned &uPort)
+		{
+			uPort = 0;
+			ZBoostErrCode ec;
+			boost::asio::ip::udp::endpoint remoteIp = m_socket.remote_endpoint(ec);
+			if( ec )
+			{
+				return m_RomeIp;
+			}
+
+			uPort = remoteIp.port();
+			string strRrIp = remoteIp.address().to_string();
+			CInPubFun::strcpy(m_RomeIp,sizeof(m_RomeIp),strRrIp.c_str(),903238 );
+			return strRrIp;
+		}
+
+		template < typename T >
+		string peony::net::XZhtUdpBase<T >::GetRemoteIp()
+		{
+			unsigned uport=0;
+			return GetRemoteIp( uport );
+		}
+
+		template < typename T >
+		string peony::net::XZhtUdpBase<T >::GetLocalIp(unsigned &uPort)
+		{
+			uPort = 0;
+			ZBoostErrCode ec;
+			boost::asio::ip::udp::endpoint remoteIp = m_socket.local_endpoint(ec);
+			if( ec )
+				return "null";
+
+			uPort = remoteIp.port();
+			return remoteIp.address().to_string();            
+
+		}
+
+		template < typename T >
+		string peony::net::XZhtUdpBase<T >::GetLocalIp()
+		{
+			unsigned uport=0;
+			return GetLocalIp( uport );
+		}
+
+		template < typename T >
+		void peony::net::XZhtUdpBase<T >::close_out(string strwhy)
+		{
+			m_IsConnectOk = false;
+			ZBoostErrCode ec;
+			if( !m_socket.is_open() )
+				return;
+
+			if( strlen(m_whyClose)<3 )
+			{//保存最初的关闭的原因
+				string strTtWhy = "Me_"+strwhy;
+				CInPubFun::strcpy( m_whyClose,sizeof(m_whyClose),strTtWhy.c_str(),930201 );
+			}
+
+			try
+			{
+				if( this->IsXMark(socketmk_log) || this->IsXMark(socketmk_logic_iniserver)  ){
+					NETLOG__SYSINFO("[close] strwhy="<<strwhy<<selflog() );
+				}
+
+				//for gracefull
+				m_socket.shutdown(boost::asio::ip::udp::socket::shutdown_both,ec);
+				if( ec && this->IsXMark(socketmk_log) ){
+					NETLOG__WARNING("[net.tcpsession.close 异常]:"<<selflog()<<ec.message()<<FUN_FILE_LINE);
+				}
+			}catch(...){
+				NETLOG__ERROR("[net.tcpsession.close 异常]:"<<selflog()<<FUN_FILE_LINE);
+			}
+		}
+
+		template < typename T >
+		void peony::net::XZhtUdpBase<T >::inclose(string strwhy/*="DefaultCurBy" */)
+		{
+			this->close_out(strwhy);
+			Boost_Scoped_Lock recvbuf_lock(m_recvbuf_mutex);
+			if( this->IsXMark(socketmk_tcpsession_indelq) )
+				return;
+			this->SetXMark( socketmk_tcpsession_indelq );
+
+			string strWhyDesc = strwhy;
+			if( this->IsXMark(socketmk_IsHeartTimeout) ){
+				strWhyDesc = boost::str( boost::format("%s_%s_%s !")%m_TcpTypeName%strwhy%"HeartTimeOut" );
+			}else{
+				strWhyDesc = boost::str( boost::format("%s_%s_%s !")%m_TcpTypeName%strwhy%"NoZhtPos" );
+			}
+
+			out_call_onconnected_handler(m_uXServerID, this->m_conn_index,Both_SelfCloseConnect,strWhyDesc,shared_from_this() );
+		}
+
+		template < typename T >
+		void peony::net::XZhtUdpBase<T >::GetSessionBufferInfo(TSessionBufferInfo &info)
+		{
+			if(1)
+			{
+				Boost_Scoped_Lock recvbuf_lock(m_recvbuf_mutex);
+				info.uSendUsedPercent = m_send_buf.get_sendbuffer_info(info.uSendOKCount,info.uSendFailCount);
+			}
+			if(1)
+			{
+				Boost_Scoped_Lock sendbuf_lock(m_sendbuf_mutex);
+				info.uReciveUsedPercent = m_recv_buf.get_recivebuffer_info(info.uReciveCount);
+			}
+
+		}
+
+		template < typename T >
+		void peony::net::XZhtUdpBase<T >::ClearSeeionBufferInfo()
+		{
+			if(1)
+			{
+				Boost_Scoped_Lock sendbuf_lock(m_sendbuf_mutex);
+				m_send_buf.clear_send_counterinfo();
+			}
+			if(1)
+			{
+				Boost_Scoped_Lock sendbuf_lock(m_recvbuf_mutex);
+				m_recv_buf.clear_recive_counterinfo();
+			}
+
+		}
+
+		template < typename T >
+		int peony::net::XZhtUdpBase<T >::XBase_ReadData()
+		{
+			try
+			{
+                //m_send_endpoint
+                char *pBuffer = (char*)m_recv_buf.open_for_push(1024);
+                m_socket.async_receive_from(
+                    boost::asio::buffer(pBuffer, 1024),
+                    m_endpoint,
+                    boost::bind( &INiceNetSocket::XBase_UdpReadCb,
+                                  boost::enable_shared_from_this<INiceNetSocket>::shared_from_this(),
+                                  boost::asio::placeholders::error,
+                                  boost::asio::placeholders::bytes_transferred) );
+			}
+			catch(...)
+			{
+				NETLOG__ERROR("[net.异常..1]"<<selflog()<<FUN_FILE_LINE);
+				PEYONE_REALTIMESAVE_LOG(PNGB::m_pLog);
+				close_out("ReadMsgBodyException!");
+				return 99908801;
+			}
+
+			return 0;
+		}
+
+        template < typename T >
+        void peony::net::XZhtUdpBase<T>::XBase_UdpReadCb(const ZBoostErrCode& error, std::size_t bytes_transferred)
+        {
+            if( !error )
+            {
+                m_recv_buf.finish_push((unsigned)bytes_transferred);
+                XBase_ReadData();
+            }else
+            {
+                NETLOG__ERROR("[net.XZhtUdpBase.handle_read]:[网络关闭,读错误发生] "<<selflog());
+                if(this->IsXMark(socketmk_log))
+                {
+                    string strerrormsg = error.message();
+                    ostringstream straaa;
+                    straaa<<", message = ["<<error.value()<<";"<<error.message()<<"]";
+                    strerrormsg = straaa.str();
+                    NETLOG__ERROR(selflog()<<", message = ["<<error.value()<<";"<<error.message()<<"]"<<FUN_FILE_LINE);
+                }
+
+                inclose("HanleReadFailAa");
+                ZBoostErrCode ec;
+                m_socket.close(ec);
+            }
+        }
+
+		template < typename T >
+		int peony::net::XZhtUdpBase<T >::XBase_WriteData(const char *pBuffer,unsigned uMaxLen,unsigned uMinLen, int iDataType)
+		{
+			m_socket.async_send_to(boost::asio::buffer(pBuffer, uMaxLen),
+				m_endpoint,
+				boost::bind(&INiceNetSocket::XBase_UdpWriteCb,
+					this,
+					boost::asio::placeholders::error,
+					boost::asio::placeholders::bytes_transferred));
+			return 0;
+			try
+			{
+                m_socket.async_send_to(boost::asio::buffer(pBuffer, uMaxLen),
+                    m_endpoint,
+                    boost::bind (&INiceNetSocket::XBase_UdpWriteCb,
+                        boost::enable_shared_from_this<INiceNetSocket>::shared_from_this(),
+                        boost::asio::placeholders::error,
+                        boost::asio::placeholders::bytes_transferred));
+			}
+			catch (...)
+			{
+				NETLOG__ERROR("[async_write异常]:"<<selflog()<<FUN_FILE_LINE);
+				PEYONE_REALTIMESAVE_LOG(PNGB::m_pLog);
+				return 99908802;
+			}
+			return 0;
+		}
+
+        template < typename T >
+        void peony::net::XZhtUdpBase<T>::XBase_UdpWriteCb(const ZBoostErrCode& error, std::size_t bytes_transferred)
+        {
+            if(!error)
+            {
+            }
+            else
+            {
+                NETLOG__ERROR("[net.XZhtUdpBase.handle_read]:[网络关闭,读错误发生] "<<selflog());
+                if(this->IsXMark(socketmk_log))
+                {
+                    string strerrormsg = error.message();
+                    ostringstream straaa;
+                    straaa<<", message = ["<<error.value()<<";"<<error.message()<<"]";
+                    strerrormsg = straaa.str();
+                    NETLOG__ERROR(selflog()<<", message = ["<<error.value()<<";"<<error.message()<<"]"<<FUN_FILE_LINE);
+                }
+
+                //inclose("HanleReadFailAa");
+                //ZBoostErrCode ec;
+                //m_socket.close(ec);
+            }
+        }
+
+    }	// end of namespace net
+}	// end of namespace peony
+
+#endif //XZhtTCPBase_h__

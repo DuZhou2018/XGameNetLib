@@ -1,0 +1,7 @@
+2022/2/10 星期四 17:31:00
+         make -j4                 编译生成C++的网络库 debug版本
+         make -j4 zver=release    编译生成C++的网络库 release版本
+         
+         make -j4 NETBTYPE=ForPyExLib                 编译生成Py扩展的网络库 debug版本
+         make -j4 zver=release NETBTYPE=ForPyExLib    编译生成Py扩展的网络库 release版本
+         

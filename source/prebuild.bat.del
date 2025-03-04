@@ -1,0 +1,10 @@
+if exist "..\..\..\build\svninfo\SubWCRev.exe" goto :process
+
+echo "SubWCRev.exe not exist, use default file"
+copy build.rawfile.cpp build.cpp
+goto end
+
+:process
+..\..\..\build\svninfo\SubWCRev.exe .\ .\build.rawfile.cpp .\build.cpp
+
+:end
